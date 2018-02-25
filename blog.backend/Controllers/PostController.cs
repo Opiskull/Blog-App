@@ -36,7 +36,7 @@ namespace blog.Controllers {
 
         // POST api/values
         [HttpPost]
-        public async Task<Post> Post([FromBody] Post value) {
+        public async Task<Post> Create([FromBody] Post value) {
             value.Created = DateTime.UtcNow;
             value.Modified = DateTime.UtcNow;
             await _context.Posts.AddAsync(value);
@@ -48,7 +48,7 @@ namespace blog.Controllers {
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] Post value) {
+        public async Task<IActionResult> Update(Guid id, [FromBody] Post value) {
             if (value.Id == null || value.Id == Guid.Empty) {
                 return NotFound();
             }
