@@ -1,0 +1,28 @@
+<template>
+  <require from="./app.scss"></require>
+  <div class="container-permanent-body">
+      <!-- TOOLBAR -->
+      <mdc-toolbar fixed="true" waterfall="true">
+        <mdc-toolbar-row>
+          <mdc-toolbar-section start="true">
+            <a class="material-icons mdc-toolbar__menu-icon" href="#/">menu</a>
+            <mdc-toolbar-title>Title</mdc-toolbar-title>
+          </mdc-toolbar-section>  
+          <mdc-toolbar-section end="true" fit="true">
+            <button class="mdc-toolbar__icon"><i class="material-icons">person</i>Login</button>
+          </mdc-toolbar-section>            
+        </mdc-toolbar-row>
+      </mdc-toolbar>    
+      <!-- REMOVE this class if NOT using FIXED toolbar  -->
+      <div class="mdc-toolbar-fixed-adjust">    
+        <!-- place drawer and main next to each other. -->
+        <div class="container-permanent-content">    
+          <!-- MAIN AREA -->
+          <main class="container-permanent-main">
+              <router-view name="primary"></router-view>
+              <router-view name="secondary"></router-view>
+          </main>    
+        </div>
+      </div>
+    </div>
+</template>

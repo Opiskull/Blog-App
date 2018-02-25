@@ -1,0 +1,16 @@
+<template>
+  <require from="../components/blog/edit-post"></require>
+  <style>
+    .mdc-dialog__surface{
+      width: 900px;
+      max-width: 900px;
+    }
+  </style>
+  <mdc-dialog
+  header="New post"
+  accept="Create"
+  cancel="Cancel"
+  view-model.ref="dialog">
+    <edit-post post.bind="post"></edit-post>
+  </mdc-dialog>
+</template>

@@ -1,0 +1,13 @@
+<template>
+  <mdc-grid>
+    <mdc-grid-cell span="12">
+      <mdc-text-field value.bind="post.title" placeholder="Title" fullwidth="true"></mdc-text-field>
+    </mdc-grid-cell>
+    <mdc-grid-cell span="12">
+      <mdc-text-field value.bind="post.content" placeholder="Write your post here" multiline="true" fullwidth="true"></mdc-text-field>
+      <mdc-chip-set>
+        <mdc-chip repeat.for="tag of post.tags">${tag}</mdc-chip>
+      </mdc-chip-set>
+    </mdc-grid-cell>
+  </mdc-grid>
+</template>

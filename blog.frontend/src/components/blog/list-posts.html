@@ -1,0 +1,11 @@
+<template>
+  <div repeat.for="post of posts">
+    <button style="float:right;" mdc-button="raised:false;compact:true;" click.trigger="editPost(post.id)">
+      <i class="material-icons mdc-button__icon">mode edit</i> Edit
+    </button>
+    <h1 class="mdc-typography--display1">${post.title}</h1>
+    <p>${post.content}</p>
+    <span class="mdc-typography--caption">Created: ${post.created}</span>
+  </div>
+  <button style="position:fixed;bottom:1rem;right:1rem;" mdc-fab="ripple: false;" click.trigger="newPost()">add</button>
+</template>
