@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using blog.backend.Database;
 using blog.Database;
 using blog.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,65 +10,53 @@ using Microsoft.AspNetCore.Mvc;
 namespace blog.Controllers {
     [Route("api/[controller]")]
     public class PostController : Controller {
-        private readonly BlogContext _context;
-        public PostController(BlogContext context) {
-            _context = context;
+        private readonly IPostService _postService;
+        public PostController(IPostService postService) {
+            _postService = postService;
         }
-        // GET api/values
+
         [HttpGet]
-        public IEnumerable<Post> Get() {
-            return _context.Posts.ToList();
+        public Task<List<Post>> Get() {
+            return _postService.GetAllAsync();
         }
 
         [HttpGet("latest/{count:int}")]
-        public IEnumerable<Post> Latest(int count) {
-            return _context.Posts.OrderBy(post => post.Created).Take(count);
+        public Task<List<Post>> Latest(int count) {
+            return _postService.GetLatestAsync(count);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id) {
-            var article = await _context.Posts.FindAsync(id);
+            var article = await _postService.GetByIdAsync(id);
             if (article == null) {
                 return NotFound();
             }
             return Json(article);
         }
 
-        // POST api/values
         [HttpPost]
-        public async Task<Post> Create([FromBody] Post value) {
-            value.Created = DateTime.UtcNow;
-            value.Modified = DateTime.UtcNow;
-            await _context.Posts.AddAsync(value);
-
-            await _context.SaveChangesAsync();
-
-            return value;
+        public Task<Post> Create([FromBody] Post post) {
+            return _postService.CreateAsync(post);
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] Post value) {
-            if (value.Id == null || value.Id == Guid.Empty) {
+        public async Task<IActionResult> Update(Guid id, [FromBody] Post post) {
+            if (post.Id == null || post.Id == Guid.Empty) {
                 return NotFound();
             }
-            value.Modified = DateTime.UtcNow;
-            _context.Posts.Update(value);
-            await _context.SaveChangesAsync();
-            return Json(value);
+            await _postService.UpdateAsync(post);
+            return Json(post);
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id) {
-            var post = await _context.Posts.FindAsync(id);
-            if (post == null) {
+            var result = await _postService.DeleteAsync(id);
+            if (result) {
+                return NoContent();
+            } else {
                 return Json(new NotFoundObjectResult(id));
             }
-            _context.Posts.Remove(post);
-            await _context.SaveChangesAsync();
-            return NoContent();
         }
     }
 }
