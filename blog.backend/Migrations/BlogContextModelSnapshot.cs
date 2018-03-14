@@ -10,7 +10,7 @@ using System;
 
 namespace blog.Migrations
 {
-    [DbContext(typeof(BlogContext))]
+    [DbContext(typeof(DatabaseContext))]
     partial class BlogContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

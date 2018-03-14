@@ -2,9 +2,9 @@ using blog.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace blog.Database {
-    public class BlogContext : DbContext {
+    public class DatabaseContext : DbContext {
 
-        public BlogContext(DbContextOptions<BlogContext> options): base(options) { }
+        public DatabaseContext(DbContextOptions<DatabaseContext> options): base(options) { }
         public DbSet<Post> Posts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {

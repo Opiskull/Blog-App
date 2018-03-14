@@ -13,7 +13,7 @@ namespace blog.tests {
 
         public DatabaseFixture() {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddDbContext<BlogContext>(options => options.UseInMemoryDatabase("testDB"), ServiceLifetime.Transient);
+            serviceCollection.AddDbContext<DatabaseContext>(options => options.UseInMemoryDatabase("testDB"), ServiceLifetime.Transient);
             serviceCollection.AddTransient<IPostService, PostService>();
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
@@ -21,7 +21,7 @@ namespace blog.tests {
         }
 
         public void AddSampleData() {
-            var context = ServiceProvider.GetService<BlogContext>();
+            var context = ServiceProvider.GetService<DatabaseContext>();
             var posts = NewPost
                 .Generate(SampleCount);
             posts[0].Id = SampleGuid;
@@ -30,8 +30,8 @@ namespace blog.tests {
             context.SaveChanges();
         }
 
-        public BlogContext CreateContext() {
-            return ServiceProvider.GetService<BlogContext>();
+        public DatabaseContext CreateContext() {
+            return ServiceProvider.GetService<DatabaseContext>();
         }
 
         public T GetService<T>() {

@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace blog.backend.Database {
     public class PostService : IPostService {
-        BlogContext _context;
+        DatabaseContext _context;
 
-        public PostService(BlogContext context) {
+        public PostService(DatabaseContext context) {
             _context = context;
         }
         public async Task<Post> CreateAsync(Post post) {
